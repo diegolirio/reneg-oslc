@@ -1,20 +1,20 @@
-package br.com.reneg.lista.processor.interfaces;
+package br.com.reneg.simulacao.processor.interfaces;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface ProcessorLista {
+public interface ProcessorSimulacao {
 
-    String SAMPLE = "lista";
+    String SAMPLE = "simulacao";
 
     @Input(SAMPLE)
     SubscribableChannel sampleSink();
 
-    String OUTPUT = "simulacao";
+    String OUTPUT = "fimOslc";
 
-    @Output("simulacao")
+    @Output("fimOslc")
     MessageChannel output();
 
 

@@ -16,12 +16,10 @@ public class ProcessorListaImpl {
 
     @StreamListener(ProcessorLista.SAMPLE)
     @SendTo(ProcessorLista.OUTPUT)
-    public OlscResponse process(String cpfCnpj) {
-        OlscResponse olscResponse = new OlscResponse();
-        olscResponse.setCpfCnpj(cpfCnpj);
+    public OlscResponse process(OlscResponse olscResponse) {
         olscResponse.setNumeroJornada(1L);
         olscResponse.setDataJornada(LocalDate.now());
-        System.out.printf("cpfCnpj= %s e  olscResponse=%s\n", cpfCnpj, olscResponse);
+        System.out.printf("LC1 olscResponse=%s\n", olscResponse);
         return olscResponse;
     }
 }
