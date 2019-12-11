@@ -1,26 +1,36 @@
 package br.com.reneg.oslc.facade;
 
 import br.com.reneg.oslc.model.OlscResponse;
-import br.com.reneg.oslc.processor.interfaces.Source;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
+import org.springframework.kafka.requestreply.RequestReplyFuture;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeTypeUtils;
 
 @Component
-@EnableBinding({Source.class})
 public class OslcFacade {
 
     @Autowired
-    Source source;
+    ReplyingKafkaTemplate<String, OlscResponse,OlscResponse> kafkaTemplate;
 
-    public OlscResponse processaSimulacao(String cpfCnpj) {
-        MessageChannel messageChannel = source.sampleSource();
-        messageChannel.send(MessageBuilder.withPayload(cpfCnpj)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build());
-        return null;
+    @Value("${kafka.topic.request-topic}")
+    String requestTopic;
+
+    @Value("${kafka.topic.requestreply-topic}")
+    String requestReplyTopic;
+
+    public OlscResponse processaSimulacao(String cpfCnpj) throws Exception {
+        OlscResponse olscResponse = new OlscResponse();
+        olscResponse.setCpfCnpj(cpfCnpj);
+        ProducerRecord<String, OlscResponse> record = new ProducerRecord<>(requestTopic, olscResponse);
+        record.headers().add(new RecordHeader(KafkaHeaders.REPLY_TOPIC, requestReplyTopic.getBytes()));
+        final RequestReplyFuture<String, OlscResponse, OlscResponse> sendAndReceive = kafkaTemplate.sendAndReceive(record);
+        sendAndReceive.getSendFuture().get();
+        ConsumerRecord<String, OlscResponse> consumerRecord = sendAndReceive.get();
+        return consumerRecord.value();
     }
 }
