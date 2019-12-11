@@ -12,9 +12,9 @@ public interface ProcessorJornada {
     @Input(SAMPLE)
     SubscribableChannel sampleSink();
 
-    String OUTPUT = "fimOslc";
+    String OUTPUT = "lista";
 
-    @Output("fimOslc")
+    @Output("lista")
     MessageChannel output();
 
 

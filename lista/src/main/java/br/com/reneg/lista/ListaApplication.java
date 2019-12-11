@@ -1,4 +1,4 @@
-package br.com.reneg.oslc;
+package br.com.reneg.lista;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 
 @SpringBootApplication
 @EnableBinding
-public class RenegApplication {
+public class ListaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RenegApplication.class, args);
+		SpringApplication.run(ListaApplication.class, args);
 	}
 
 }

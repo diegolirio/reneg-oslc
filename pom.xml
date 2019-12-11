@@ -21,9 +21,8 @@
     <modules>
 		<module>oslc</module>
 	    <module>jornada</module>
-
-<!--        <module>lista</module>-->
-<!--        <module>simulacao</module>-->
+        <module>lista</module>
+        <module>simulacao</module>
     </modules>
 
     <properties>

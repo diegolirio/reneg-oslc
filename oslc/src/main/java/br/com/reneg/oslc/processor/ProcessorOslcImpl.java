@@ -13,7 +13,7 @@ public class ProcessorOslcImpl {
     @StreamListener(ProcessorOslc.SAMPLE)
     @SendTo(ProcessorOslc.OUTPUT)
     public OlscResponse process(OlscResponse olscResponse) {
-        System.out.println("Jornada Recebe e Enviar jo: " + olscResponse);
+        System.out.println("ProcessorOslc Recebe e Enviar jo: " + olscResponse);
         return olscResponse;
     }
 }
