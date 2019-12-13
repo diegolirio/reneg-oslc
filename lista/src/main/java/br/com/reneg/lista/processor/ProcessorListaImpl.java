@@ -6,6 +6,7 @@ import br.com.reneg.lista.processor.interfaces.ProcessorLista;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.messaging.handler.annotation.SendTo;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class ProcessorListaImpl {
     @SendTo(ProcessorLista.OUTPUT)
     public OlscResponse process(OlscResponse olscResponse) {
         olscResponse.setNumeroJornada(1L);
+        Processor r;
         olscResponse.setDataJornada(LocalDate.now());
         System.out.printf("LC1 olscResponse=%s\n", olscResponse);
         return olscResponse;
