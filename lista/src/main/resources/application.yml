@@ -1,0 +1,18 @@
+server:
+  port: 8091
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: ${KAFKA_SERVERS:localhost:9092}
+          #brokers: localhost:9092
+      bindings:
+        input:
+          destination: lista
+          contentType: application/json
+        output:
+          destination: simulacao
+          contentType: application/json
+
